@@ -63,14 +63,18 @@ export function createProject(db: DB, input: ProjectCreateInput): Project {
     updatedAt: now,
   };
 
+  const resumeData = input.resume ? JSON.stringify(input.resume) : EMPTY_RESUME_JSON;
+  const fullName = input.resume?.basics.fullName || null;
+  const headline = input.resume?.basics.headline || null;
+
   db.transaction((tx) => {
     tx.insert(projects).values(row).run();
     tx.insert(resumeDocuments)
       .values({
         projectId: id,
-        data: EMPTY_RESUME_JSON,
-        fullName: null,
-        headline: null,
+        data: resumeData,
+        fullName,
+        headline,
         updatedAt: now,
       })
       .run();
@@ -84,6 +88,21 @@ export function renameProject(db: DB, input: ProjectRenameInput): Project {
   const updated = db
     .update(projects)
     .set({ name: input.name, updatedAt: now })
+    .where(eq(projects.id, input.id))
+    .returning()
+    .get();
+  if (!updated) throw new ProjectNotFoundError(input.id);
+  return rowToProject(updated);
+}
+
+export function updateProjectTemplate(
+  db: DB,
+  input: { id: string; templateId: string },
+): Project {
+  const now = Date.now();
+  const updated = db
+    .update(projects)
+    .set({ templateId: input.templateId, updatedAt: now })
     .where(eq(projects.id, input.id))
     .returning()
     .get();

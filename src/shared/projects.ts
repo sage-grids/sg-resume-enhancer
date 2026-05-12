@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { Resume } from './resume';
 
 export const ProjectId = z.string().uuid();
 
@@ -15,6 +16,7 @@ export type Project = z.infer<typeof Project>;
 export const ProjectCreateInput = z.object({
   name: z.string().min(1, 'Name is required').max(120),
   templateId: z.string().optional(),
+  resume: Resume.optional(),
 });
 export type ProjectCreateInput = z.infer<typeof ProjectCreateInput>;
 
@@ -26,3 +28,9 @@ export type ProjectRenameInput = z.infer<typeof ProjectRenameInput>;
 
 export const ProjectIdInput = z.object({ id: ProjectId });
 export type ProjectIdInput = z.infer<typeof ProjectIdInput>;
+
+export const ProjectUpdateTemplateInput = z.object({
+  id: ProjectId,
+  templateId: z.string(),
+});
+export type ProjectUpdateTemplateInput = z.infer<typeof ProjectUpdateTemplateInput>;

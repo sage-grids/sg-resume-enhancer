@@ -1,0 +1,6 @@
+{
+  "id": "modern",
+  "name": "Modern",
+  "version": 1,
+  "supports": ["basics", "summary", "experience", "education", "skills"]
+}

@@ -1,0 +1,6 @@
+{
+  "id": "compact",
+  "name": "Compact",
+  "version": 1,
+  "supports": ["basics", "summary", "experience", "education", "skills"]
+}

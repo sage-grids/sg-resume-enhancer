@@ -3,7 +3,13 @@ import path from 'node:path';
 import { logger } from './logger';
 import { registerSystemIpc } from './ipc/system';
 import { registerProjectsIpc } from './ipc/projects';
+import { registerResumeIpc } from './ipc/resume';
+import { registerTemplatesIpc } from './ipc/templates';
+import { registerExportIpc } from './ipc/projects_export';
+import { registerImportIpc } from './ipc/import';
+import { registerAiIpc } from './ipc/ai';
 import { closeDb, loadBundledMigrations, openDb } from './db/client';
+import { loadTemplates } from './templates/loader';
 
 const isDev = !app.isPackaged;
 
@@ -54,6 +60,12 @@ app.whenReady().then(() => {
   }
   registerSystemIpc();
   registerProjectsIpc();
+  registerResumeIpc();
+  registerTemplatesIpc();
+  registerExportIpc();
+  registerImportIpc();
+  registerAiIpc();
+  loadTemplates();
   logger.info('app: ready');
   createWindow();
 

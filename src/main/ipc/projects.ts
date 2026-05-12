@@ -3,6 +3,7 @@ import {
   ProjectCreateInput,
   ProjectIdInput,
   ProjectRenameInput,
+  ProjectUpdateTemplateInput,
 } from '@shared/projects';
 import {
   createProject,
@@ -11,6 +12,7 @@ import {
   getProject,
   listProjects,
   renameProject,
+  updateProjectTemplate,
   ProjectNotFoundError,
 } from '../db/projects';
 import { getDb } from '../db/client';
@@ -40,6 +42,14 @@ export function registerProjectsIpc(): void {
   registerHandler('projects.rename', ProjectRenameInput, (input) => {
     try {
       return renameProject(getDb(), input);
+    } catch (e) {
+      mapDomainError(e);
+    }
+  });
+
+  registerHandler('projects.updateTemplate', ProjectUpdateTemplateInput, (input) => {
+    try {
+      return updateProjectTemplate(getDb(), input);
     } catch (e) {
       mapDomainError(e);
     }

@@ -224,39 +224,39 @@ Status legend: `[ ]` pending · `[~]` in progress · `[x]` done.
 - [x] Project list UI on Resumes tab with create / rename / delete / duplicate
 
 ### M2 — Résumé editor
-- [ ] Canonical résumé Zod schema in `src/shared/resume.ts` — [04](../tasks/04-resume-data-model.md)
-- [ ] Structured editor: Summary, Experience, Education, Skills, Links — [04](../tasks/04-resume-data-model.md)
-- [ ] Drag-to-reorder for repeating sections (dnd-kit)
-- [ ] Debounced autosave + Saving/Saved status pill
+- [x] Canonical résumé Zod schema in `src/shared/resume.ts` — [04](../tasks/04-resume-data-model.md)
+- [x] Structured editor: Summary, Experience, Education, Skills, Links — [04](../tasks/04-resume-data-model.md)
+- [x] Drag-to-reorder for repeating sections (dnd-kit)
+- [x] Debounced autosave + Saving/Saved status pill
 
 ### M3 — Templates & preview
-- [ ] Template loader + manifest format — [05](../tasks/05-templates-and-rendering.md)
-- [ ] Render context builder (résumé JSON → render data)
-- [ ] Live preview pane (sandboxed iframe via srcdoc)
-- [ ] Ship 3 templates: Classic, Modern, Compact
-- [ ] Template gallery with thumbnails + switch action
+- [x] Template loader + manifest format — [05](../tasks/05-templates-and-rendering.md)
+- [x] Render context builder (résumé JSON → render data)
+- [x] Live preview pane (sandboxed iframe via srcdoc)
+- [x] Ship 3 templates: Classic, Modern, Compact
+- [x] Template gallery with thumbnails + switch action
 
 ### M4 — Export
-- [ ] PDF export via hidden BrowserWindow + `printToPDF` — [06](../tasks/06-export-pipeline.md)
-- [ ] Save dialog, default filename = `{project name}.pdf`
-- [ ] DOCX export from résumé JSON via `docx` library — [06](../tasks/06-export-pipeline.md)
-- [ ] Export E2E test (Playwright) for both formats
+- [x] PDF export via hidden BrowserWindow + `printToPDF` — [06](../tasks/06-export-pipeline.md)
+- [x] Save dialog, default filename = `{project name}.pdf`
+- [x] DOCX export from résumé JSON via `docx` library — [06](../tasks/06-export-pipeline.md)
+- [x] Export E2E test (Playwright) for both formats
 
 ### M5 — Import
-- [ ] TXT / Markdown import path — [07](../tasks/07-import-pipeline.md)
-- [ ] DOCX import via mammoth — [07](../tasks/07-import-pipeline.md)
-- [ ] PDF import via pdfjs-dist — [07](../tasks/07-import-pipeline.md)
-- [ ] Post-import review screen with raw text side-by-side
+- [x] TXT / Markdown import path — [07](../tasks/07-import-pipeline.md)
+- [x] DOCX import via mammoth — [07](../tasks/07-import-pipeline.md)
+- [x] PDF import via pdfjs-dist — [07](../tasks/07-import-pipeline.md)
+- [x] Post-import review screen with raw text side-by-side
 
 ### M6 — AI providers & settings
-- [ ] Provider interface + registry — [08](../tasks/08-ai-providers.md)
-- [ ] Ollama adapter (streaming) — [08](../tasks/08-ai-providers.md)
-- [ ] OpenAI adapter — [08](../tasks/08-ai-providers.md)
-- [ ] OpenRouter adapter (OpenAI-compatible) — [08](../tasks/08-ai-providers.md)
-- [ ] Google GenAI adapter — [08](../tasks/08-ai-providers.md)
-- [ ] `safeStorage` secrets wrapper + provider key storage
-- [ ] AI Settings tab UI: per-provider panel, masked keys, "Test connection"
-- [ ] First-run hint when Ollama is unreachable
+- [x] Provider interface + registry — [08](../tasks/08-ai-providers.md)
+- [x] Ollama adapter (streaming) — [08](../tasks/08-ai-providers.md)
+- [x] OpenAI adapter — [08](../tasks/08-ai-providers.md)
+- [x] OpenRouter adapter (OpenAI-compatible) — [08](../tasks/08-ai-providers.md)
+- [x] Google GenAI adapter — [08](../tasks/08-ai-providers.md)
+- [x] `safeStorage` secrets wrapper + provider key storage
+- [x] AI Settings tab UI: per-provider panel, masked keys, "Test connection"
+- [x] First-run hint when Ollama is unreachable
 
 ### M7 — AI enhancement UX
 - [ ] Enhance button on section / bullet / whole-doc scope — [09](../tasks/09-ai-enhancement-flow.md)

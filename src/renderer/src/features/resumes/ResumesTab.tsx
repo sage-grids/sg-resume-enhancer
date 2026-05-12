@@ -1,11 +1,16 @@
 import { useState } from 'react';
-import { Copy, FileText, Pencil, Plus, Trash2 } from 'lucide-react';
+import { Copy, FileText, Loader2, Pencil, Plus, Trash2, Upload } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import type { Project } from '@shared/projects';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import NewProjectDialog from './NewProjectDialog';
 import RenameProjectDialog from './RenameProjectDialog';
 import { useProjects } from './useProjects';
+import ImportReviewDialog from './ImportReviewDialog';
+import { ImportCandidate } from '@shared/import';
+import { unwrap } from '../../lib/api';
+import { Resume } from '@shared/resume';
 
 function formatUpdatedAt(ts: number): string {
   const d = new Date(ts);
@@ -19,11 +24,13 @@ function formatUpdatedAt(ts: number): string {
 }
 
 export default function ResumesTab() {
-  const { projects, loading, error, create, rename, duplicate, remove } = useProjects();
+  const { projects, loading, error, refresh, create, rename, duplicate, remove } = useProjects();
   const [newOpen, setNewOpen] = useState(false);
   const [renameTarget, setRenameTarget] = useState<Project | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
+  const [importCandidate, setImportCandidate] = useState<ImportCandidate | null>(null);
+  const [parsing, setParsing] = useState(false);
 
   async function onDuplicate(p: Project) {
     setBusyId(p.id);
@@ -50,6 +57,35 @@ export default function ResumesTab() {
     }
   }
 
+  async function onImportPick() {
+    try {
+      const res = unwrap(await window.api.import.pickFile());
+      if (!res.canceled && res.filePath) {
+        setParsing(true);
+        const candidate = unwrap(await window.api.import.parseFile({ filePath: res.filePath }));
+        setImportCandidate(candidate);
+      }
+    } catch (e) {
+      setActionError(e instanceof Error ? e.message : 'Failed to parse file');
+    } finally {
+      setParsing(false);
+    }
+  }
+
+  async function onImportCommit(resume: Resume) {
+    try {
+      unwrap(
+        await window.api.projects.create({
+          name: `${resume.basics.fullName || 'Imported'} Résumé`,
+          resume,
+        }),
+      );
+      await refresh();
+    } catch (e) {
+      setActionError(e instanceof Error ? e.message : 'Failed to create project');
+    }
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -57,10 +93,16 @@ export default function ResumesTab() {
           <h1 className="text-2xl font-semibold tracking-tight">Resumes</h1>
           <p className="text-sm text-foreground/60">Your local résumé projects.</p>
         </div>
-        <Button onClick={() => setNewOpen(true)}>
-          <Plus className="mr-2 h-4 w-4" />
-          New project
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={onImportPick} disabled={parsing}>
+            {parsing ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Upload className="mr-2 h-4 w-4" />}
+            Import
+          </Button>
+          <Button onClick={() => setNewOpen(true)}>
+            <Plus className="mr-2 h-4 w-4" />
+            New project
+          </Button>
+        </div>
       </div>
 
       {error ? (
@@ -106,12 +148,15 @@ export default function ResumesTab() {
             return (
               <li key={p.id} className="flex items-center gap-4 px-5 py-4">
                 <FileText className="h-5 w-5 shrink-0 text-foreground/50" />
-                <div className="min-w-0 flex-1">
+                <Link
+                  to={`/resumes/${p.id}`}
+                  className="min-w-0 flex-1 hover:underline underline-offset-4"
+                >
                   <div className="truncate font-medium">{p.name}</div>
                   <div className="text-xs text-foreground/50">
                     Updated {formatUpdatedAt(p.updatedAt)}
                   </div>
-                </div>
+                </Link>
                 <div className="flex items-center gap-1">
                   <Button
                     variant="ghost"
@@ -161,6 +206,15 @@ export default function ResumesTab() {
           await rename(id, name);
         }}
       />
+
+      {importCandidate && (
+        <ImportReviewDialog
+          open={!!importCandidate}
+          onClose={() => setImportCandidate(null)}
+          candidate={importCandidate}
+          onImport={onImportCommit}
+        />
+      )}
     </div>
   );
 }

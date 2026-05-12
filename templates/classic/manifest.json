@@ -1,0 +1,6 @@
+{
+  "id": "classic",
+  "name": "Classic",
+  "version": 1,
+  "supports": ["basics", "summary", "experience", "education", "skills"]
+}

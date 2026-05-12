@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: sans-serif; margin: 0; padding: 0; display: flex; color: #333; min-height: 11in; }
+        .sidebar { width: 30%; background-color: #f0f4f8; padding: 40px 20px; border-right: 1px solid #d1d9e0; }
+        .main { width: 70%; padding: 40px; }
+        h1 { margin: 0; font-size: 28px; color: #1a365d; }
+        .headline { font-size: 18px; color: #4a5568; margin-top: 5px; }
+        .sidebar-section { margin-bottom: 30px; }
+        .sidebar-title { font-weight: bold; text-transform: uppercase; font-size: 14px; margin-bottom: 10px; color: #2c5282; border-bottom: 2px solid #2c5282; padding-bottom: 2px; }
+        .contact-item { font-size: 13px; margin-bottom: 5px; word-break: break-all; }
+        .main-section { margin-bottom: 30px; }
+        .main-title { font-weight: bold; text-transform: uppercase; font-size: 16px; margin-bottom: 15px; color: #1a365d; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; }
+        .item { margin-bottom: 20px; }
+        .item-header { display: flex; justify-content: space-between; font-weight: bold; font-size: 15px; }
+        .item-sub { display: flex; justify-content: space-between; font-style: italic; font-size: 13px; color: #718096; margin-bottom: 5px; }
+        .bullets { margin: 0; padding-left: 20px; font-size: 14px; }
+        .skill-group { margin-bottom: 10px; font-size: 13px; }
+        .skill-cat { font-weight: bold; }
+        @page { size: Letter; margin: 0; }
+        @media print { .sidebar { background-color: #f0f4f8 !important; -webkit-print-color-adjust: exact; } }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-title">Contact</div>
+            <div class="contact-item">{{ basics.email }}</div>
+            <div class="contact-item">{{ basics.phone }}</div>
+            <div class="contact-item">{{ basics.location }}</div>
+            {{#each basics.links as link}}
+            <div class="contact-item">{{ link.label }}: {{ link.url }}</div>
+            {{/each}}
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-title">Skills</div>
+            {{#each skills as group}}
+            <div class="skill-group">
+                <div class="skill-cat">{{ group.category }}</div>
+                <div>
+                    {{#each group.items as skill}}
+                    {{ skill }}{{#if !@last}}, {{/if}}
+                    {{/each}}
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="main">
+        <h1>{{ basics.fullName }}</h1>
+        {{#if basics.headline}}<div class="headline">{{ basics.headline }}</div>{{/if}}
+
+        {{#if summary}}
+        <div class="main-section" style="margin-top: 20px;">
+            <div class="main-title">Summary</div>
+            <p style="font-size: 14px;">{{ summary }}</p>
+        </div>
+        {{/if}}
+
+        {{#if experience}}
+        <div class="main-section">
+            <div class="main-title">Experience</div>
+            {{#each experience as item}}
+            <div class="item">
+                <div class="item-header">
+                    <div>{{ item.company }}</div>
+                    <div>{{ item.startDate }} – {{#if item.endDate}}{{ item.endDate }}{{/if}}{{#if !item.endDate}}Present{{/if}}</div>
+                </div>
+                <div class="item-sub">
+                    <div>{{ item.role }}</div>
+                    <div>{{ item.location }}</div>
+                </div>
+                <ul class="bullets">
+                    {{#each item.bullets as bullet}}
+                    <li>{{ bullet }}</li>
+                    {{/each}}
+                </ul>
+            </div>
+            {{/each}}
+        </div>
+        {{/if}}
+
+        {{#if education}}
+        <div class="main-section">
+            <div class="main-title">Education</div>
+            {{#each education as item}}
+            <div class="item">
+                <div class="item-header">
+                    <div>{{ item.institution }}</div>
+                    <div>{{ item.endDate }}</div>
+                </div>
+                <div class="item-sub">
+                    <div>{{ item.degree }}{{#if item.field}}, {{ item.field }}{{/if}}</div>
+                </div>
+                {{#if item.details}}<div style="font-size: 13px;">{{ item.details }}</div>{{/if}}
+            </div>
+            {{/each}}
+        </div>
+        {{/if}}
+    </div>
+</body>
+</html>
