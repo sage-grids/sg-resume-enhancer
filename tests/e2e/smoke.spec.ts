@@ -7,8 +7,8 @@ test('shows both top-level tabs on launch', async () => {
   });
   const window = await app.firstWindow();
 
-  await expect(window.getByText('Resumes', { exact: true })).toBeVisible();
-  await expect(window.getByText('AI Settings', { exact: true })).toBeVisible();
+  await expect(window.getByRole('link', { name: 'Resumes' })).toBeVisible();
+  await expect(window.getByRole('link', { name: 'AI Settings' })).toBeVisible();
 
   await app.close();
 });

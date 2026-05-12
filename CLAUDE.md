@@ -74,9 +74,14 @@ npm run lint
 npm run typecheck
 npm run test         # Vitest
 npm run test:e2e     # Playwright (requires `npm run build` first)
+npm run rebuild:electron  # better-sqlite3 → Electron ABI (before dev / e2e)
+npm run rebuild:node      # better-sqlite3 → Node ABI (before vitest)
 ```
+
+`better-sqlite3` is a native module with a single compiled binary per install. Switching between `vitest` (Node ABI) and `dev` / `test:e2e` (Electron ABI) requires running the appropriate rebuild script.
 
 ## Status
 
-- ✅ **M0 — Foundation**: bootstrap landed (this commit). App shell, two tabs, Tailwind/shadcn, log scrubber, Vitest + Playwright skeletons, CI on push.
-- ⏭️ Next up: **M1 — Persistence & IPC** (see `tasks/02-database-schema.md`, `tasks/03-ipc-architecture.md`).
+- ✅ **M0 — Foundation**: app shell, two tabs, Tailwind/shadcn, log scrubber, Vitest + Playwright skeletons, CI on push.
+- ✅ **M1 — Persistence & IPC**: SQLite + Drizzle schema + raw-SQL migration runner (WAL on, idempotent); typed IPC envelope with Zod validation; `projects.*` CRUD wired end-to-end; Resumes tab project list with create / rename / duplicate / delete.
+- ⏭️ Next up: **M2 — Résumé editor** (see `tasks/04-resume-data-model.md`).

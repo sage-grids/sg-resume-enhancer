@@ -211,17 +211,17 @@ Detail: [`tasks/07-import-pipeline.md`](../tasks/07-import-pipeline.md).
 Status legend: `[ ]` pending · `[~]` in progress · `[x]` done.
 
 ### M0 — Foundation
-- [ ] Initialize repo: electron-vite + TS + ESLint + Prettier — [01](../tasks/01-project-bootstrap.md)
-- [ ] App shell: main window, two top-level tabs (Resumes, AI Settings) — [01](../tasks/01-project-bootstrap.md)
-- [ ] Tailwind + shadcn/ui set up; base theme tokens
-- [ ] electron-log wired with secret scrubbing
-- [ ] Vitest + Playwright skeleton; CI workflow (lint + unit) on push
+- [x] Initialize repo: electron-vite + TS + ESLint + Prettier — [01](../tasks/01-project-bootstrap.md)
+- [x] App shell: main window, two top-level tabs (Resumes, AI Settings) — [01](../tasks/01-project-bootstrap.md)
+- [x] Tailwind + shadcn/ui set up; base theme tokens
+- [x] electron-log wired with secret scrubbing
+- [x] Vitest + Playwright skeleton; CI workflow (lint + unit) on push
 
 ### M1 — Persistence & IPC
-- [ ] SQLite client + Drizzle schema + migration runner — [02](../tasks/02-database-schema.md)
-- [ ] Typed IPC bridge via `contextBridge` + Zod validation — [03](../tasks/03-ipc-architecture.md)
-- [ ] `projects.*` CRUD end-to-end (main → preload → renderer)
-- [ ] Project list UI on Resumes tab with create / rename / delete / duplicate
+- [x] SQLite client + Drizzle schema + migration runner — [02](../tasks/02-database-schema.md)
+- [x] Typed IPC bridge via `contextBridge` + Zod validation — [03](../tasks/03-ipc-architecture.md)
+- [x] `projects.*` CRUD end-to-end (main → preload → renderer)
+- [x] Project list UI on Resumes tab with create / rename / delete / duplicate
 
 ### M2 — Résumé editor
 - [ ] Canonical résumé Zod schema in `src/shared/resume.ts` — [04](../tasks/04-resume-data-model.md)

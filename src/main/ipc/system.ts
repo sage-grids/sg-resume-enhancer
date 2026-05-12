@@ -1,5 +1,5 @@
-import { ipcMain } from 'electron';
+import { registerHandler } from './handler';
 
 export function registerSystemIpc(): void {
-  ipcMain.handle('system.ping', () => ({ ok: true, data: 'pong' as const }));
+  registerHandler('system.ping', null, () => 'pong' as const);
 }
